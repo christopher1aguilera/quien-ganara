@@ -19,11 +19,10 @@ async function getusu(correos, usuarios, datausuarioJSON, res) {
         let info = {nombre: nombre, foto: imagen, pais: pais, correo: correo, id: ID}
         usuarios.push(info);
         fs.writeFileSync("usuarios.json",JSON.stringify(datausuarioJSON));
-        if(err) throw err
-        fs.readFile('usuarios.json', 'utf8', (err, data) => {
-            if(err) throw err
-            res.end(data)
-        })
+        // fs.readFile('usuarios.json', 'utf8', (err, data) => {
+        //     if(err) throw err
+        //     res.end(data)
+        // })
     });        
 }
 module.exports = getusu
