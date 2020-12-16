@@ -4,10 +4,11 @@ const { v4: uuidv4 } = require('uuid')
 
 const getApi = () =>{
     return Axios.get('https://randomuser.me/api')
-         .then(response => response.data.results[0])
+        .then(response => response.data.results[0])
+        .catch(error=> {console.error(error)})
 }
 
-function getusu(correos, usuarios, datausuarioJSON, res) {
+async function getusu(correos, usuarios, datausuarioJSON, res) {
     getApi().then(datos =>{
         let nombre = `${datos.name.title} ${datos.name.first} ${datos.name.last}`
         let correo = `${datos.email}`
@@ -18,9 +19,11 @@ function getusu(correos, usuarios, datausuarioJSON, res) {
         let info = {nombre: nombre, foto: imagen, pais: pais, correo: correo, id: ID}
         usuarios.push(info);
         fs.writeFileSync("usuarios.json",JSON.stringify(datausuarioJSON));
+        if(err) throw err
         fs.readFile('usuarios.json', 'utf8', (err, data) => {
+            if(err) throw err
             res.end(data)
-          })
+        })
     });        
 }
 module.exports = getusu
