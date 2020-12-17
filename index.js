@@ -16,7 +16,7 @@ http
         res.end(data)
         })
     }
-    if ((req.url.startsWith('/usuario')) && req.method == "POST") {
+    if (req.url.startsWith('/usuario') && req.method == "POST") {
         //asincrona
         getusu(correos, usuarios, datausuarioJSON, res)      
     }  
@@ -54,5 +54,12 @@ http
             alert('ingrese usuarios')
         }
     }
+    usuarios.forEach(e=>{
+let id = e.id
+    if (req.url.startsWith(`/${id}`) && req.method == "GET") {
+        let registro = {nombre: e.nombre, foto: e.foto, pais: e.pais, correo: e.correo, id: e.id}
+        res.end(JSON.stringify(registro));
+    }
+})
 })
 .listen(3000, () => console.log('Escuchando el puerto 3000'))
